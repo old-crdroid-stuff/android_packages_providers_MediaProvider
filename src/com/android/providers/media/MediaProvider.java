@@ -3377,6 +3377,12 @@ public class MediaProvider extends ContentProvider {
             // the directory name as a prefix
             if ((match == MTP_OBJECTS || match == MTP_OBJECTS_ID || match == FILES_DIRECTORY)
                     && initialValues != null && initialValues.size() == 1) {
+
+                String data = initialValues.getAsString(MediaColumns.DATA);
+                if (! initialValues.containsKey(MediaColumns.DISPLAY_NAME)) {
+                    computeDisplayName(data, initialValues);
+                }
+
                 String oldPath = null;
                 String newPath = initialValues.getAsString(MediaStore.MediaColumns.DATA);
                 mDirectoryCache.remove(newPath);
